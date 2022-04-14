@@ -1,15 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { NotFoundError } from 'rxjs';
 import { Product } from './product.model';
 
 @Injectable()
 export class ProductsService {
   private products: Product[] = [];
 
-  private findProduct(id: string) {
-    const product = this.products.find((prod) => prod.id === id);
+  private findProduct(id: string): [Product, number] {
+    const productIndex = this.products.findIndex((prod) => prod.id === id);
 
-    return { ...product };
+    const product = this.products[productIndex];
+
+    return [product, productIndex];
   }
 
   insertProduct(title: string, price: number, description: string): Product {
@@ -30,7 +31,7 @@ export class ProductsService {
   }
 
   getSingleProduct(productId: string): Product {
-    const product = this.findProduct(productId);
+    const product = this.findProduct(productId)[0];
 
     if (!product) {
       throw new NotFoundException('couldnt find product');
@@ -45,14 +46,38 @@ export class ProductsService {
     price: number,
     description: string,
   ): Product {
+    let product = this.findProduct(productId)[0];
 
-    let product = this.findProduct(productId);
+    const index = this.findProduct(productId)[1];
+    const updatedProduct = { ...product };
+    if (title) {
+      updatedProduct.title = title;
+    }
+    if (price) {
+      updatedProduct.price = price;
+    }
+    if (description) {
+      updatedProduct.description = description;
+    }
+    this.products[index] = updatedProduct;
+
     if (!product) {
       throw new NotFoundException('couldnt find product');
     }
 
-    
+    return updatedProduct;
+  }
 
-    return;
+  deleteProduct(id) : Product {
+
+    let [product, index] = this.findProduct(id);
+    
+    if(!product) {
+        throw new NotFoundException("couldn't find the product")
+    }
+
+    this.products.splice(index,1)
+
+     return {...product};
   }
 }
