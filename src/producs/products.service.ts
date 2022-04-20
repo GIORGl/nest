@@ -35,8 +35,9 @@ export class ProductsService {
     return newProduct;
   }
 
-  getProducts(): Product[] {
-    return [...this.products];
+  async getProducts(): Promise<Product[]> {
+    const products = await this.productModel.find();
+    return products;
   }
 
   getSingleProduct(productId: string): Product {

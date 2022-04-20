@@ -25,7 +25,7 @@ export class ProducsController {
   }
 
   @Get()
-  getAllProducts(): Product[] {
+  getAllProducts(): Promise<Product[]> {
     return this.productsService.getProducts();
   }
 
