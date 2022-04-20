@@ -16,7 +16,7 @@ export class ProducsController {
   @Post()
   addProduct(
     @Body() completeBody: { title: string; price: number; description: string },
-  ): Product {
+  ): Promise<Product> {
     return this.productsService.insertProduct(
       completeBody.title,
       completeBody.price,
