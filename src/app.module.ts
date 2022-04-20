@@ -6,7 +6,7 @@ import { ProductsModule } from './producs/products.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [ProductsModule,MongooseModule.forRoot('mongodb+srv://kichi:kichi>@cluster0.3iomj.mongodb.net/nestapp?retryWrites=true&w=majority')],
+  imports: [ProductsModule,MongooseModule.forRoot('mongodb+srv://kichi:nVpqTRH_5atyY9K@cluster0.3iomj.mongodb.net/nestapp?retryWrites=true&w=majority')],
   controllers: [AppController],
   providers: [AppService],
 })
