@@ -30,7 +30,7 @@ export class ProducsController {
   }
 
   @Get(':id')
-  getProductById(@Param('id') id: string): Product {
+  getProductById(@Param('id') id: string): Promise<Product> {
     return this.productsService.getSingleProduct(id);
   }
 
@@ -39,7 +39,7 @@ export class ProducsController {
     @Param('id') id: string,
     @Body() completeBody: { title: string; price: number; description: string },
   ) {
-    this.productsService.updateProduct(
+    return this.productsService.updateProduct(
       id,
       completeBody.title,
       completeBody.price,
@@ -48,7 +48,7 @@ export class ProducsController {
   }
 
   @Delete(':id')
-  deleteProduct(@Param('id') id: string):Product {
-  return  this.productsService.deleteProduct(id);
+  deleteProduct(@Param('id') id: string): Promise<Product> {
+    return this.productsService.deleteProduct(id);
   }
 }
