@@ -85,8 +85,6 @@ export class ProductsService {
       throw new NotFoundException("couldn't find the product");
     }
 
-    // this.products.splice(index, 1);
-
     return product;
   }
 }
