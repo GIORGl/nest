@@ -1,10 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
+import { UserDetails } from './user-details.interface';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  @Get()
-  getUsers() {
-    return;
+  constructor(private UserService: UsersService) {}
+
+  @Get(':id')
+  getUser(@Param('id') id: string): Promise<UserDetails | null> {
+    return this.UserService.findById(id);
   }
 }
-                
